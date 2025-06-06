@@ -1,0 +1,79 @@
+<main>
+
+        <div class="contenedor_principal_alta">
+
+            <form class="contenedor_forms" id="ratingForm" action="">
+                <fieldset>
+                    <legend>Contanos tu Experiencia</legend>
+
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" pattern="^[A-Za-z\s]+$" required
+                        placeholder="Ingrese su nombre (solo texto)">
+
+                    <label for="edad">Edad</label>
+                    <input type="number" name="edad" id="edad" required min="18" max="100" step="1"
+                        placeholder="Ingrese su edad">
+
+                    <label for="correo">E-mail</label>
+                    <input type="email" name="correo" id="correo"
+                        pattern="^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\.[a-zA-Z]{2,}$" required
+                        placeholder="Ingrese su Correo Electrónico">
+
+                    <div>
+                        <div class="descripciones">
+                            <label for="comentarios">Dejanos tus comentarios</label>
+                            <textarea name="comentarios" id="comentarios"
+                                placeholder="Contanos cómo fue tu experiencia con nosotros" required maxlength="600"
+                                onblur="validarTexto(this)" oninput="actualizarContadorComentarios()"></textarea>
+                            <span id="contadorComentarios">0/600</span>
+                        </div>
+                    </div>
+                    <div class="selecciones_contacto">
+                        <label>¿Cómo nos conociste?</label>
+                        <div class="plataformas">
+                            <div>
+                                <input type="radio" name="Opciones" id="Instagram" required><label
+                                    for="opcion1">Instagram</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="Opciones" id="Facebook" required><label
+                                    for="opcion2">Facebook</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="Opciones" id="Página Web" required><label for="opcion3">Página
+                                    Web</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="Opciones" id="Otro" required><label for="opcion4">Otro</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Calificá tu experiencia</label>
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                        </div>
+                    </div>
+                    <div class="selecciones_contacto">
+                        <div>
+                            <input type="checkbox" name="Newsletter" id="Newsletter">
+                            <label class="sin_negrita" for="Newsletter">
+                                Quiero ser parte del newsletter semanal.
+                            </label>
+                        </div>
+                    </div>
+                    <label for="archivo" class="boton_personalizado">Subir Foto</label>
+                    <input type="file" name="archivo" id="archivo" multiple class="oculto">
+
+                    <button class="boton_formulario" type="submit">Enviar Comentarios</button>
+                    <button class="boton_formulario" type="reset">Eliminar Contenido</button>
+                </fieldset>
+            </form>
+        </div>
+    </main>
+    <script src="../js/validacionContacto.js"></script>

@@ -1,0 +1,77 @@
+<main>
+    <div>
+        <div class="contenedor_banner">
+            <div class="banner">
+                <video id="videoA" autoplay muted loop playsinline></video>
+                <video id="videoB" autoplay muted loop playsinline></video>
+            </div>
+            <div class="texto_banner">
+                <h3>Aroma, dulzura y calidez.</h3>
+                <h2>Tu pausa favorita del día</h2>
+            </div>
+        </div>
+
+        <div class="contenedor_principal">
+            <div class="contenedor_menu">
+                <section class="cafeteria" onclick="mostrarCategoria('cafeteria')">
+                <img
+                    src="/assets/cafeteria/logo_cafe.png"
+                    alt="Cafe_PNG"
+                    class="imagen_cafe"
+                />
+                <div>
+                    <h3>Cafeteria</h3>
+                </div>
+                </section>
+                <div class="separador"></div>
+                <section class="heladeria" onclick="mostrarCategoria('heladeria')">
+                <img
+                    src="/assets/heladeria/logo_helado.png"
+                    alt="Helado_PNG"
+                    class="imagen_helado"
+                />
+                <div>
+                    <h3>Heladería</h3>
+                </div>
+                </section>
+
+            </div>
+
+            <div class="tarjetas" id="contenedorTarjetas">
+                {{#each productos}}
+                <div class="producto {{categoria}}" data-categoria="{{categoria}}">
+                    <div class="titulo_producto">
+                    <h2>{{titulo}}</h2>
+                    </div>
+                    <div>
+                    <img src="{{imagen}}" alt="{{titulo}}" class="imagen_producto" />
+                    </div>
+                    <div class="Descripcion_Producto">
+                    <p>{{descripcion}}</p>
+                    </div>
+                    <div class="footer_tarjeta">
+                        <div class="precio_producto">
+                            <span>${{precio}}.-</span>
+                        </div>
+                        <div class="boton_agregar_carrito" style="flex-grow:1">
+                            <button 
+                            class="btn-agregar-carrito"
+                            data-id="{{this._id}}"
+                            data-titulo="{{this.titulo}}"
+                            data-precio="{{this.precio}}"
+                            data-imagen="{{this.imagen}}">
+                                <img
+                                                src="/assets/header/Carrito.png"
+                                                alt="Agregar al carrito"
+                                                class="Boton_Imagen"
+                                            />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</main>
+<script src="../js/funciones.js"></script>

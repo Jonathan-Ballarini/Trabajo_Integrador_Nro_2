@@ -1,0 +1,101 @@
+    <main>
+    <div class="contenedor_principal_alta">
+        <form class="contenedor_forms" action="/api/productos" method="POST" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Alta de Productos</legend>
+
+            <div>
+            <label>Categoría</label>
+            <div class="selecciones_alta">
+                <div>
+                <input type="radio" name="categoria" id="categoria_cafeteria" value="cafeteria" required>
+                <label class="sin_negrita" for="categoria_cafeteria">Cafetería</label>
+                </div>
+                <div>
+                <input type="radio" name="categoria" id="categoria_heladeria" value="heladeria">
+                <label class="sin_negrita" for="categoria_heladeria">Heladería</label>
+                </div>
+            </div>
+            </div>
+
+            <label for="titulo">Título</label>
+            <input type="text" name="titulo" id="titulo" required placeholder="Ingrese el nombre del producto">
+
+            <label for="precio">Precio</label>
+            <input type="number" step="1" name="precio" id="precio" required placeholder="Ingrese el precio">
+
+            <label for="descripcion">Descripción</label>
+            <textarea name="descripcion" id="descripcion" required placeholder="Detalle el producto"></textarea>
+
+            <label for="imagen" class="boton_personalizado">Subir Foto</label>
+            <input type="file" name="imagen" id="imagen" accept="image/*" class="oculto">
+
+            <button class="boton_formulario" type="submit">Cargar Producto</button>
+            <button class="boton_formulario" type="reset">Eliminar Contenido</button>
+        </fieldset>
+        </form>
+
+
+    <section class="listado_productos_admin">
+    <h2>Productos Cargados</h2>
+    {{#if productos.length}}
+    <table>
+        <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Título</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each productos}}
+        <tr>
+            <td data-label="Imagen"><img src="{{this.imagen}}" alt="{{this.titulo}}" width="100" /></td>
+            <td data-label="Título">{{this.titulo}}</td>
+            <td data-label="Categoría">{{this.categoria}}</td>
+            <td data-label="Precio">${{this.precio}}.-</td>
+            <td data-label="Descripción">{{this.descripcion}}</td>
+            <td class="td-acciones" data-label="Acciones">
+            <button 
+            class="btn-agregar-carrito"
+            data-id="{{this._id}}"
+            data-titulo="{{this.titulo}}"
+            data-precio="{{this.precio}}"
+            data-imagen="{{this.imagen}}">
+                <img
+                                src="/assets/header/Carrito.png"
+                                alt="Agregar al carrito"
+                                class="Boton_Imagen"
+                            />
+            </button>
+            <button class="btn-ver" data-id="{{this._id}}">Ver</button>
+            
+
+            <button class="btn-editar"
+                data-id="{{this._id}}"
+                data-titulo="{{this.titulo}}"
+                data-categoria="{{this.categoria}}"
+                data-precio="{{this.precio}}"
+                data-descripcion="{{this.descripcion}}"
+                data-imagen="{{this.imagen}}">
+                Editar
+            </button>
+
+            <button class="btn-eliminar" data-id="{{this._id}}">Eliminar</button>
+            </td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    {{else}}
+        <p>No hay productos cargados.</p>
+    {{/if}}
+    </section>
+
+    </div>
+    </main>
+    <script src="../js/funcionProducto.js"></script>
+
