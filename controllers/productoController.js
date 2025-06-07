@@ -1,6 +1,7 @@
     require("dotenv").config();
-    const axios = require("axios");
     const Producto = require("../models/producto");
+    const cloudinary = require('../config/cloudinary');
+    const fs = require('fs');
 
     const crearProducto = async (req, res) => {
     try {
@@ -17,19 +18,13 @@
         let urlImagen = imagen;
 
         if (!imagen && req.file) {
-        const imagenBase64 = req.file.buffer.toString("base64");
+        const resultado = await cloudinary.uploader.upload(req.file.path, {
+            folder: "cafelino",
+        });
 
-        const respuesta = await axios.post(
-            "https://api.imgur.com/3/image",
-            { image: imagenBase64, type: "base64" },
-            {
-            headers: {
-                Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
-            },
-            }
-        );
+        urlImagen = resultado.secure_url;
 
-        urlImagen = respuesta.data.data.link;
+        fs.unlinkSync(req.file.path);
         }
 
         if (!urlImagen) {
@@ -114,17 +109,13 @@
         const datosActualizados = { categoria, titulo, descripcion, precio };
 
         if (req.file) {
-        const imagenBase64 = req.file.buffer.toString("base64");
-        const respuesta = await axios.post(
-            "https://api.imgur.com/3/image",
-            { image: imagenBase64, type: "base64" },
-            {
-            headers: {
-                Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
-            },
-            }
-        );
-        datosActualizados.imagen = respuesta.data.data.link;
+        const resultado = await cloudinary.uploader.upload(req.file.path, {
+            folder: "cafelino",
+        });
+
+        datosActualizados.imagen = resultado.secure_url;
+
+        fs.unlinkSync(req.file.path);
         }
 
         await Producto.findByIdAndUpdate(productoId, datosActualizados);
