@@ -2,6 +2,7 @@
     const Producto = require("../models/producto");
     const cloudinary = require('../config/cloudinary');
     const fs = require('fs');
+    const { Readable } = require('stream');
 
     const crearProducto = async (req, res) => {
     try {
@@ -17,14 +18,25 @@
 
         let urlImagen = imagen;
 
-        if (!imagen && req.file) {
-        const resultado = await cloudinary.uploader.upload(req.file.path, {
-            folder: "cafelino",
+        if (req.file) {
+            console.log("Archivo recibido:", req.file);
+
+        const bufferStream = new Readable();
+        bufferStream.push(req.file.buffer);
+        bufferStream.push(null);
+
+        const resultado = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+            { folder: 'cafelino' },
+            (error, result) => {
+                if (error) return reject(error);
+                resolve(result);
+            }
+            );
+            bufferStream.pipe(stream);
         });
 
         urlImagen = resultado.secure_url;
-
-        fs.unlinkSync(req.file.path);
         }
 
         if (!urlImagen) {
@@ -109,13 +121,22 @@
         const datosActualizados = { categoria, titulo, descripcion, precio };
 
         if (req.file) {
-        const resultado = await cloudinary.uploader.upload(req.file.path, {
-            folder: "cafelino",
+        const bufferStream = new Readable();
+        bufferStream.push(req.file.buffer);
+        bufferStream.push(null);
+
+        const resultado = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+            { folder: 'cafelino' },
+            (error, result) => {
+                if (error) return reject(error);
+                resolve(result);
+            }
+            );
+            bufferStream.pipe(stream);
         });
 
         datosActualizados.imagen = resultado.secure_url;
-
-        fs.unlinkSync(req.file.path);
         }
 
         await Producto.findByIdAndUpdate(productoId, datosActualizados);
